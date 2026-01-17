@@ -8,8 +8,8 @@ enum class FileType(val displayName: String) {
     PDF("PDFs"),
     APK("APKs"),
     OTHER("Other"),
-    UNSORTED_DOWNLOADS("Unsorted (Downloads)"),
-    UNSORTED_QUICK_SHARE("Unsorted (Quick Share)")
+    INCOMING_DOWNLOADS("Downloads"),
+    INCOMING_QUICK_SHARE("Quick Share")
 }
 
 data class FileItem(

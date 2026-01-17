@@ -20,7 +20,7 @@ The project follows a standard Android MVVM architecture with Jetpack Compose:
 The project was refactored from `com.example.downloadsorganizer` to `com.canh0chua.downloadsorganizer` to ensure a unique namespace and resolve `ClassNotFoundException` during deployment.
 
 ### File Operations
-- **Categorization**: Files are categorized by extension (see `FileViewModel.getFileType`). Support includes standard types plus HEIC and various APK package formats. Files in the root of `Downloads` or `Quick Share` are specially marked as "Unsorted".
+- **Categorization**: Files are categorized by extension (see `FileViewModel.getFileType`). Support includes standard types plus HEIC and various APK package formats. Files in the root of `Downloads` or `Quick Share` are marked as **Incoming** and pinned to the top of the dashboard.
 - **Scanning**: Recursive scan of `Downloads` and `Quick Share`. `scanFiles()` in `FileViewModel` returns a `Job` to allow synchronization with other operations.
 - **Organization (Repair)**: The `organizeFiles()` function can "repair" the organization by moving files that are already in a category folder (like `Other`) to their correct home if they are miscategorized. This ensures disk contents sync with the dashboard.
 - **Sorting**: User-selectable sort order (Name, Date, Size) implemented in `FileViewModel`, defaulting to Date Descending.

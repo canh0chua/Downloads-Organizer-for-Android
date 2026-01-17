@@ -32,6 +32,8 @@
     - Added human-readable timestamps to file list items.
     - Implemented a sorting menu (Name, Date, Size) with Date as the default.
 - **Improved Dashboard**:
-    - Added dedicated tiles for "Unsorted" files in Downloads and Quick Share.
+    - Re-ordered tiles to pin "Downloads" and "Quick Share" (incoming) to the top.
+    - Redesigned tiles with a badge-style file count in the top-right corner.
+    - Optimized typography for a cleaner, premium fit.
 - **Privacy & Lifecycle**:
     - App now terminates itself on stop to prevent background execution.

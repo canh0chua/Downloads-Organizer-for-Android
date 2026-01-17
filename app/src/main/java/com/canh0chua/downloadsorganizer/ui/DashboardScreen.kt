@@ -58,7 +58,12 @@ fun DashboardScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(padding)
             ) {
-                items(FileType.entries) { type ->
+                val sortedTypes = FileType.entries.toMutableList()
+                val topTypes = listOf(FileType.INCOMING_DOWNLOADS, FileType.INCOMING_QUICK_SHARE)
+                sortedTypes.removeAll(topTypes)
+                val finalOrder = topTypes + sortedTypes
+
+                items(finalOrder) { type ->
                     val count = fileState[type]?.size ?: 0
                     CategoryCard(
                         type = type,
@@ -82,41 +87,52 @@ fun CategoryCard(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(140.dp)
+            .height(130.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = getIconForType(type),
-                contentDescription = null,
-                modifier = Modifier.size(48.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = type.displayName,
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                maxLines = 2,
-                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
-                lineHeight = androidx.compose.ui.unit.sp(14)
-            )
-            Text(
-                text = count.toString(),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.secondary
-            )
-            Text(
-                text = "files",
-                style = MaterialTheme.typography.labelSmall
-            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Count in top right
+            Surface(
+                color = MaterialTheme.colorScheme.secondaryContainer,
+                shape = MaterialTheme.shapes.small,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = count.toString(),
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = getIconForType(type),
+                    contentDescription = null,
+                    modifier = Modifier.size(40.dp),
+                    tint = if (type == FileType.INCOMING_DOWNLOADS || type == FileType.INCOMING_QUICK_SHARE)
+                        MaterialTheme.colorScheme.tertiary
+                    else
+                        MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = type.displayName,
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
@@ -130,7 +146,7 @@ fun getIconForType(type: FileType): ImageVector {
         FileType.PDF -> Icons.Default.PictureAsPdf
         FileType.APK -> Icons.Default.Android
         FileType.OTHER -> Icons.Default.QuestionMark
-        FileType.UNSORTED_DOWNLOADS -> Icons.Default.DownloadForOffline
-        FileType.UNSORTED_QUICK_SHARE -> Icons.Default.Share
+        FileType.INCOMING_DOWNLOADS -> Icons.Default.DownloadForOffline
+        FileType.INCOMING_QUICK_SHARE -> Icons.Default.Share
     }
 }

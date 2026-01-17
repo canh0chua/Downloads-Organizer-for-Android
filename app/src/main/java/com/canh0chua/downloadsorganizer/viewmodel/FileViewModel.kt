@@ -73,8 +73,8 @@ class FileViewModel : ViewModel() {
 
             val categorized = allFiles.map { file ->
                 val type = when {
-                    file.parentFile == downloadsDir -> FileType.UNSORTED_DOWNLOADS
-                    file.parentFile == quickShareDir -> FileType.UNSORTED_QUICK_SHARE
+                    file.parentFile == downloadsDir -> FileType.INCOMING_DOWNLOADS
+                    file.parentFile == quickShareDir -> FileType.INCOMING_QUICK_SHARE
                     else -> getFileType(file)
                 }
                 
