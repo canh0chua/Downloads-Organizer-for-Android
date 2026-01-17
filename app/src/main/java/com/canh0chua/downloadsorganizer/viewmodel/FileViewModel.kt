@@ -172,20 +172,27 @@ class FileViewModel : ViewModel() {
             if (quickShareDir.exists()) managedDirs.add(quickShareDir)
             
             _fileState.value.forEach { (type, items) ->
-                val targetDir = File(downloadsDir, type.displayName)
-                if (!targetDir.exists()) {
-                    targetDir.mkdirs()
-                }
-                
                 items.forEach { item ->
                     val sourceFile = File(item.path)
+                    
+                    val targetType = if (type == FileType.INCOMING_DOWNLOADS || type == FileType.INCOMING_QUICK_SHARE) {
+                        getFileType(sourceFile)
+                    } else {
+                        type
+                    }
+                    
+                    val targetDir = File(downloadsDir, targetType.displayName)
+                    if (!targetDir.exists()) {
+                        targetDir.mkdirs()
+                    }
+                    
                     val targetFile = File(targetDir, item.name)
                     
                     // Move if it's in a managed folder but not its target folder
                     val parent = sourceFile.parentFile
                     if (sourceFile.exists() && parent != null && parent in managedDirs && parent != targetDir) {
                         if (sourceFile.renameTo(targetFile)) {
-                            Log.d(TAG, "Repaired/Organized: ${item.name} -> ${type.displayName}")
+                            Log.d(TAG, "Organized: ${item.name} -> ${targetType.displayName}")
                         } else {
                             Log.e(TAG, "Failed to move: ${item.name} from ${sourceFile.parent} to ${targetDir.absolutePath}")
                         }

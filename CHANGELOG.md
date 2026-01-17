@@ -16,10 +16,11 @@
 - **Categorization Refinements**:
     - Added support for `.heic` image files.
     - Added support for various APK formats (`.xapk`, `.apkm`, `.xapkm`, `.eapk`).
-- **Scanning Improvments**:
+- **Scanning & Organization Improvements**:
     - Restored full recursive scanning for accurate file counting.
     - Added "Repair Organization" to re-categorize files already in sub-folders.
     - Synchronized scan and organization operations via coroutines.
+    - **Fully automated Quick Share sorting**: Files in the `Quick Share` folder and the root of `Downloads` are now automatically sorted into their respective category sub-folders during organization.
 - **Improved UX**:
     - Automatic navigation back to dashboard after permission grant.
     - Prominent file counts on dashboard with adjusted typography.

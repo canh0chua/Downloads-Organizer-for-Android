@@ -7,7 +7,7 @@ A Material 3 Android application designed to keep your Downloads folder clean an
 - **Categorized Scanning**: Automatically identifies and categorizes files into Images, Videos, Audio, Documents, PDFs, APKs, and more (including HEIC and APK variants).
 - **Recursive Scan**: Deeply scans your Downloads and Quick Share folders to find files nested in sub-directories.
 - **Advanced Thumbnails**: High-quality thumbnails for images, extracted video frames, and actual app icons for APK files.
-- **One-Click Organization**: Moves files from the Downloads root into neatly labeled sub-folders based on their category.
+- **One-Click Organization**: Moves files from the `Downloads` root and the `Quick Share` folder into neatly labeled sub-folders based on their category.
 - **File Management**: Rename files, bulk delete selection, and age-based cleanup.
 - **Sorting & Details**: Show file timestamps and sort by Name, Date, or Size (defaults to modified date).
 - **Unsorted Tiles**: Dedicated dashboard tiles for files still sitting in the `Downloads` or `Quick Share` root.
