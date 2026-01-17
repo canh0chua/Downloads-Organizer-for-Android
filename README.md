@@ -8,10 +8,10 @@ A Material 3 Android application designed to keep your Downloads folder clean an
 - **Recursive Scan**: Deeply scans your Downloads and Quick Share folders to find files nested in sub-directories.
 - **Advanced Thumbnails**: High-quality thumbnails for images, extracted video frames, and actual app icons for APK files.
 - **One-Click Organization**: Moves files from the Downloads root into neatly labeled sub-folders based on their category.
-- **File Management**: Rename files, bulk delete selection, and age-based cleanup (delete files older than X days).
-- **Modern UI**: Built with Jetpack Compose using Material 3 guidelines, featuring a clean dashboard and detailed file lists.
-- **Permission UX**: Automatically navigates back to the dashboard after granting required permissions in settings.
-- **Privacy First**: Operates entirely on-device with required `MANAGE_EXTERNAL_STORAGE` permissions for file operations.
+- **File Management**: Rename files, bulk delete selection, and age-based cleanup.
+- **Sorting & Details**: Show file timestamps and sort by Name, Date, or Size (defaults to modified date).
+- **Unsorted Tiles**: Dedicated dashboard tiles for files still sitting in the `Downloads` or `Quick Share` root.
+- **Privacy Mode**: Automatically terminates when backgrounded for enhanced security and zero battery impact.
 
 ## 📥 Download
 

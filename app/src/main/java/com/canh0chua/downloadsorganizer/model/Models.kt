@@ -7,7 +7,9 @@ enum class FileType(val displayName: String) {
     DOC("Documents"),
     PDF("PDFs"),
     APK("APKs"),
-    OTHER("Other")
+    OTHER("Other"),
+    UNSORTED_DOWNLOADS("Unsorted (Downloads)"),
+    UNSORTED_QUICK_SHARE("Unsorted (Quick Share)")
 }
 
 data class FileItem(

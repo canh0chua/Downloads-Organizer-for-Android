@@ -24,6 +24,30 @@ class FileViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
+    private val _sortOrder = MutableStateFlow(SortOrder.DATE_DESC)
+    val sortOrder: StateFlow<SortOrder> = _sortOrder.asStateFlow()
+
+    enum class SortOrder {
+        NAME_ASC, NAME_DESC, DATE_ASC, DATE_DESC, SIZE_ASC, SIZE_DESC
+    }
+
+    fun setSortOrder(order: SortOrder) {
+        _sortOrder.value = order
+        // Trigger a re-sort of existing state without re-scanning
+        _fileState.value = _fileState.value.mapValues { (_, items) -> sortItems(items, order) }
+    }
+
+    private fun sortItems(items: List<FileItem>, order: SortOrder): List<FileItem> {
+        return when (order) {
+            SortOrder.NAME_ASC -> items.sortedBy { it.name.lowercase() }
+            SortOrder.NAME_DESC -> items.sortedByDescending { it.name.lowercase() }
+            SortOrder.DATE_ASC -> items.sortedBy { it.lastModified }
+            SortOrder.DATE_DESC -> items.sortedByDescending { it.lastModified }
+            SortOrder.SIZE_ASC -> items.sortedBy { it.size }
+            SortOrder.SIZE_DESC -> items.sortedByDescending { it.size }
+        }
+    }
+
     private val _hasPermission = MutableStateFlow(true) // Default to true to avoid flicker if already granted
     val hasPermission: StateFlow<Boolean> = _hasPermission.asStateFlow()
 
@@ -48,7 +72,12 @@ class FileViewModel : ViewModel() {
             }
 
             val categorized = allFiles.map { file ->
-                val type = getFileType(file)
+                val type = when {
+                    file.parentFile == downloadsDir -> FileType.UNSORTED_DOWNLOADS
+                    file.parentFile == quickShareDir -> FileType.UNSORTED_QUICK_SHARE
+                    else -> getFileType(file)
+                }
+                
                 FileItem(
                     name = file.name,
                     path = file.absolutePath,
@@ -56,7 +85,7 @@ class FileViewModel : ViewModel() {
                     type = type,
                     lastModified = file.lastModified()
                 )
-            }.groupBy { it.type }
+            }.groupBy { it.type }.mapValues { (_, items) -> sortItems(items, _sortOrder.value) }
 
             _fileState.value = categorized
             _isLoading.value = false

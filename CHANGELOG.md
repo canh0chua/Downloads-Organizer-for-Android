@@ -28,5 +28,10 @@
 - **Automation**:
     - Added `Makefile` for standard build/install tasks.
     - Added ` release.sh` for automated APK release and archival on-device.
-- **Branding**:
-    - New modern application logo and adaptive icon.
+- **Enhanced File Detail**:
+    - Added human-readable timestamps to file list items.
+    - Implemented a sorting menu (Name, Date, Size) with Date as the default.
+- **Improved Dashboard**:
+    - Added dedicated tiles for "Unsorted" files in Downloads and Quick Share.
+- **Privacy & Lifecycle**:
+    - App now terminates itself on stop to prevent background execution.

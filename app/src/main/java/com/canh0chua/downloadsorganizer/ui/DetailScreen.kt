@@ -25,6 +25,9 @@ import com.canh0chua.downloadsorganizer.model.FileType
 import com.canh0chua.downloadsorganizer.viewmodel.FileViewModel
 import java.io.File
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.math.log10
 import kotlin.math.pow
 
@@ -57,6 +60,39 @@ fun DetailScreen(
                         }
                     },
                     actions = {
+                        var showSortMenu by remember { mutableStateOf(false) }
+                        IconButton(onClick = { showSortMenu = true }) {
+                            Icon(Icons.Default.Sort, contentDescription = "Sort")
+                        }
+                        DropdownMenu(
+                            expanded = showSortMenu,
+                            onDismissRequest = { showSortMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Name (A-Z)") },
+                                onClick = { viewModel.setSortOrder(FileViewModel.SortOrder.NAME_ASC); showSortMenu = false }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Name (Z-A)") },
+                                onClick = { viewModel.setSortOrder(FileViewModel.SortOrder.NAME_DESC); showSortMenu = false }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Date (Newest)") },
+                                onClick = { viewModel.setSortOrder(FileViewModel.SortOrder.DATE_DESC); showSortMenu = false }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Date (Oldest)") },
+                                onClick = { viewModel.setSortOrder(FileViewModel.SortOrder.DATE_ASC); showSortMenu = false }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Size (Largest)") },
+                                onClick = { viewModel.setSortOrder(FileViewModel.SortOrder.SIZE_DESC); showSortMenu = false }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Size (Smallest)") },
+                                onClick = { viewModel.setSortOrder(FileViewModel.SortOrder.SIZE_ASC); showSortMenu = false }
+                            )
+                        }
                         IconButton(onClick = { showCleanupDialog = true }) {
                             Icon(Icons.Default.CleaningServices, contentDescription = "Cleanup old files")
                         }
@@ -214,7 +250,9 @@ fun FileListItem(
                 )
             },
             supportingContent = {
-                Text(text = formatFileSize(fileItem.size))
+                val date = Date(fileItem.lastModified)
+                val formatter = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
+                Text(text = "${formatFileSize(fileItem.size)} • ${formatter.format(date)}")
             },
             leadingContent = {
                 Box {

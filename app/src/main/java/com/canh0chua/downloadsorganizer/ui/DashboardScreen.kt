@@ -100,8 +100,12 @@ fun CategoryCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = type.displayName,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.Bold,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                maxLines = 2,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                lineHeight = androidx.compose.ui.unit.sp(14)
             )
             Text(
                 text = count.toString(),
@@ -126,5 +130,7 @@ fun getIconForType(type: FileType): ImageVector {
         FileType.PDF -> Icons.Default.PictureAsPdf
         FileType.APK -> Icons.Default.Android
         FileType.OTHER -> Icons.Default.QuestionMark
+        FileType.UNSORTED_DOWNLOADS -> Icons.Default.DownloadForOffline
+        FileType.UNSORTED_QUICK_SHARE -> Icons.Default.Share
     }
 }
