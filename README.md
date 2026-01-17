@@ -13,6 +13,10 @@ A Material 3 Android application designed to keep your Downloads folder clean an
 - **Permission UX**: Automatically navigates back to the dashboard after granting required permissions in settings.
 - **Privacy First**: Operates entirely on-device with required `MANAGE_EXTERNAL_STORAGE` permissions for file operations.
 
+## 📥 Download
+
+You can download the latest APK from the [Final Release](https://github.com/canh0chua/Downloads-Organizer-for-Android/releases/tag/final).
+
 ## Installation
 
 1.  Clone the repository.
